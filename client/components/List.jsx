@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import {getTestdb} from '../actions/test'
+// import {getTestdb} from '../actions/test'
+import {getPosts} from '../actions/posts'
 
 export class List extends React.Component {
   constructor (props) {
@@ -10,19 +11,26 @@ export class List extends React.Component {
     }
   }
   componentDidMount () {
-    this.props.dispatch(getTestdb())
+    this.props.dispatch(getPosts())
   }
 
   render () {
-    console.log(this.props.test.staff)
+    console.log(this.props.posts)
     return (
       <div className='list-container'>
         <p> List is here </p>
-        {this.props.test.staff.map(staff => (
+        {this.props.posts.map(post => (
+          <div key={post.id}>
+            <p>{post.title}</p>
+            <p>{post.description}</p>
+            <p>{post.username}</p>
+          </div>
+        ))}
+        {/* {this.props.test.staff.map(staff => (
           <div key={staff._id}>
             <p>{staff.role}: {staff.name}</p>
           </div>
-        ))}
+        ))} */}
       </div>
     )
   }
@@ -30,7 +38,7 @@ export class List extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    test: state.test
+    posts: state.posts
   }
 }
 

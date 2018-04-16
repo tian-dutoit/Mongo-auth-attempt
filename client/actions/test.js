@@ -15,7 +15,6 @@ export function getTestdb () {
   return (dispatch) => {
     request('get', `http://localhost:3000/api/v1/test`)
       .then(res => {
-        console.log(res.body)
         dispatch(receiveTestdb(res.body))
       })
       .catch(() => {

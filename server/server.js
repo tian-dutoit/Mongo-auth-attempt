@@ -6,13 +6,14 @@ const mongoose = require('mongoose')
 const server = express()
 
 let Test = require('../models/test')
+let Posts = require('../models/posts')
 
-mongoose.connect('mongodb://localhost/testdb')
+mongoose.connect('mongodb://localhost/lightning')
 let db = mongoose.connection
 
 // Check connection
 db.once('open', () => {
-  console.log('Connected to test db')
+  console.log('Connected to lightning db')
 })
 
 // Check for db errors
@@ -26,6 +27,16 @@ server.get('/api/v1/test', (req, res) => {
       throw err
     } else {
       res.send(test)
+    }
+  })
+})
+
+server.get('/api/v1/posts', (req, res) => {
+  Posts.find({}, (err, posts) => {
+    if (err) {
+      throw err
+    } else {
+      res.send(posts)
     }
   })
 })
