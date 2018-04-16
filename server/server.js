@@ -41,6 +41,17 @@ server.get('/api/v1/posts', (req, res) => {
   })
 })
 
+server.post('/api/v1/posts', (req, res) => {
+  console.log(req.body)
+  // Posts.find({}, (err, posts) => {
+  //   if (err) {
+  //     throw err
+  //   } else {
+  //     res.send(posts)
+  //   }
+  // })
+})
+
 server.use(bodyParser.json())
 server.use(express.static(path.join(__dirname, '../public')))
 

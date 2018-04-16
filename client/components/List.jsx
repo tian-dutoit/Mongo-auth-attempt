@@ -15,7 +15,6 @@ export class List extends React.Component {
   }
 
   render () {
-    console.log(this.props.posts)
     return (
       <div className='list-container'>
         <p> List is here </p>
@@ -26,11 +25,6 @@ export class List extends React.Component {
             <p>{post.username}</p>
           </div>
         ))}
-        {/* {this.props.test.staff.map(staff => (
-          <div key={staff._id}>
-            <p>{staff.role}: {staff.name}</p>
-          </div>
-        ))} */}
       </div>
     )
   }

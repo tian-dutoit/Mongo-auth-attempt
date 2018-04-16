@@ -3,7 +3,7 @@ let mongoose = require('mongoose')
 // Posts Schema
 
 let postsSchema = mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true
   },
