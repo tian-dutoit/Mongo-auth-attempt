@@ -5,6 +5,9 @@ const mongoose = require('mongoose')
 
 const server = express()
 
+server.use(bodyParser.json())
+server.use(express.static(path.join(__dirname, '../public')))
+
 let Test = require('../models/test')
 let Posts = require('../models/posts')
 
@@ -43,16 +46,18 @@ server.get('/api/v1/posts', (req, res) => {
 
 server.post('/api/v1/posts', (req, res) => {
   console.log(req.body)
-  // Posts.find({}, (err, posts) => {
-  //   if (err) {
-  //     throw err
-  //   } else {
-  //     res.send(posts)
-  //   }
-  // })
+  let post = new Posts()
+  post.title = req.body.title
+  post.description = req.body.description
+  post.username = req.body.username
+  console.log(post)
+  post.save((err) => {
+    if (err) {
+      throw err
+    } else {
+      res.send(post)
+    }
+  })
 })
-
-server.use(bodyParser.json())
-server.use(express.static(path.join(__dirname, '../public')))
 
 module.exports = server

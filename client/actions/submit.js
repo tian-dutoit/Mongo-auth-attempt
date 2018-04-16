@@ -3,11 +3,12 @@ import request from 'superagent'
 import {showError} from './error'
 
 export function sendTalk (talkDetails) {
+  console.log(talkDetails)  
   return (dispatch) => {
     request
       .post(`http://localhost:3000/api/v1/posts`)
       .send(talkDetails)
-      .end(res => {
+      .then(res => {
         res.send(res)
       })
       .catch(() => {
