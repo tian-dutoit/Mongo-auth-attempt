@@ -23,7 +23,6 @@ textarea {
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-  text-align: center;
   height: 100%;
 }
 
@@ -45,7 +44,9 @@ textarea {
 
 .headerContainer {
   background-color: #FDD023;
-  width: 100%
+  width: 100%;
+  margin-bottom: 5%;
+  height:5%;
 }
 
 .submitContainer {
@@ -55,7 +56,9 @@ textarea {
 .post {
   display: flex;
   flex-flow: row nowrap;
-  /* border-bottom: 1px solid black;   */
+  border: 1px solid black;  
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .content {
