@@ -2,6 +2,7 @@ const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const _ = require('lodash')
 
 const server = express()
 
@@ -28,7 +29,9 @@ server.get('/api/v1/posts', (req, res) => {
     if (err) {
       throw err
     } else {
-      res.send(posts)
+      let sorted = _.sortBy(posts, [function (o) { return o.votes }]).reverse()
+      console.log(sorted)
+      res.send(sorted)
     }
   })
 })

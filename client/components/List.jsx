@@ -1,8 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {sortBy} from 'lodash'
 
-// import {getTestdb} from '../actions/test'
 import {getPosts} from '../actions/posts'
 import {addVote} from '../actions/vote'
 
@@ -20,15 +18,7 @@ export class List extends React.Component {
 
   handleClick (e) {
     let _id = [e.target.name]
-    let votes = _id + '-votes'
-    console.log(votes)
-    const value = document.getElementById(votes).innerHTML
-    console.log(value)
     this.props.dispatch(addVote(_id))
-    // Lodash sorting
-    // let list = this.props.posts
-    // let tip = sortBy(listupdate, [function (o) { return o.title }])
-    // console.log(tip)
   }
 
   render () {
@@ -41,7 +31,7 @@ export class List extends React.Component {
             <p>{post.description}</p>
             <p>{post.username}</p>
             <p id={`${post._id}-votes`}>Votes: {post.votes}</p>
-            <button name={post._id} onClick={this.handleClick}>Like</button>            
+            <button name={post._id} onClick={this.handleClick}>Like</button>
           </div>
         ))}
       </div>
