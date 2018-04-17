@@ -1,29 +1,47 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {sortBy} from 'lodash'
 
 // import {getTestdb} from '../actions/test'
 import {getPosts} from '../actions/posts'
+import {addVote} from '../actions/vote'
 
 export class List extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
     }
+    this.handleClick = this.handleClick.bind(this)
   }
+
   componentDidMount () {
     this.props.dispatch(getPosts())
   }
 
+  handleClick (e) {
+    let _id = [e.target.name]
+    let votes = _id + '-votes'
+    console.log(votes)
+    const value = document.getElementById(votes).innerHTML
+    console.log(value)
+    this.props.dispatch(addVote(_id))
+    // Lodash sorting
+    // let list = this.props.posts
+    // let tip = sortBy(listupdate, [function (o) { return o.title }])
+    // console.log(tip)
+  }
+
   render () {
-    console.log(this.props.posts)
     return (
       <div className='list-container'>
         <p> List is here </p>
         {this.props.posts.map(post => (
-          <div key={post.id}>
+          <div key={post._id}>
             <p>{post.title}</p>
             <p>{post.description}</p>
             <p>{post.username}</p>
+            <p id={`${post._id}-votes`}>Votes: {post.votes}</p>
+            <button name={post._id} onClick={this.handleClick}>Like</button>            
           </div>
         ))}
       </div>

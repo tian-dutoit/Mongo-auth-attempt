@@ -14,6 +14,14 @@ let postsSchema = mongoose.Schema({
   username: {
     type: String,
     required: true
+  },
+  votes: {
+    type: Number,
+    required: true
+  },
+  link: {
+    type: String,
+    required: false
   }
 })
 

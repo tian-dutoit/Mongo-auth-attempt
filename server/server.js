@@ -8,7 +8,6 @@ const server = express()
 server.use(bodyParser.json())
 server.use(express.static(path.join(__dirname, '../public')))
 
-let Test = require('../models/test')
 let Posts = require('../models/posts')
 
 mongoose.connect('mongodb://localhost/lightning')
@@ -24,16 +23,6 @@ db.on('error', () => {
   console.log(err)
 })
 
-server.get('/api/v1/test', (req, res) => {
-  Test.find({}, (err, test) => {
-    if (err) {
-      throw err
-    } else {
-      res.send(test)
-    }
-  })
-})
-
 server.get('/api/v1/posts', (req, res) => {
   Posts.find({}, (err, posts) => {
     if (err) {
@@ -45,17 +34,33 @@ server.get('/api/v1/posts', (req, res) => {
 })
 
 server.post('/api/v1/posts', (req, res) => {
-  console.log(req.body)
   let post = new Posts()
   post.title = req.body.title
   post.description = req.body.description
   post.username = req.body.username
-  console.log(post)
+  post.votes = 0
   post.save((err) => {
     if (err) {
       throw err
     } else {
       res.send(post)
+    }
+  })
+})
+
+server.post('/api/v1/vote', (req, res) => {
+  Posts.findById(req.body[0], (err, post) => {
+    if (err) {
+      return res.status(500).send('Like was not added')
+    } else {
+      post.votes += 1
+      post.save((err) => {
+        if (err) {
+          throw err
+        } else {
+          res.send({})
+        }
+      })
     }
   })
 })
