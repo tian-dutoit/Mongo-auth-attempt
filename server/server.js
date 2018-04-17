@@ -76,24 +76,18 @@ function register (req, res) {
   console.log(passwordHash)
   let user = new Users()
   user.username = req.body.username
-  user.password = req.body.password
+  user.password = passwordHash
   user.save((err) => {
     if (err) {
       throw err
     } else {
-      res.send('hello')
+      res.send(passwordHash)
     }
   })
 }
 
-// Default route for non-API requests
-server.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/index.html'))
-})
 
-module.exports = server
-
-// waiting for sodium
+// temp
 
 server.post('/api/v1/jwt', (req, res) => {
   Users.findbyId(req.body[0], (err, post) => {
@@ -111,3 +105,12 @@ server.post('/api/v1/jwt', (req, res) => {
     }
   })
 })
+
+
+// Default route for non-API requests
+server.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'))
+})
+
+module.exports = server
+
