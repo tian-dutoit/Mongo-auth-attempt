@@ -5,11 +5,11 @@ const mongoose = require('mongoose')
 const _ = require('lodash')
 
 const server = express()
+const hash = require('./auth/hash')
+let Posts = require('../models/posts')
 
 server.use(bodyParser.json())
 server.use(express.static(path.join(__dirname, '../public')))
-
-let Posts = require('../models/posts')
 
 mongoose.connect('mongodb://localhost/lightning')
 let db = mongoose.connection
@@ -67,8 +67,47 @@ server.post('/api/v1/vote', (req, res) => {
   })
 })
 
+let Users = require('../models/users')
+
+server.post('/api/v1/register', register)
+
+function register (req, res) {
+  const passwordHash = hash.generate(req.body.password)
+  console.log(passwordHash)
+  let user = new Users()
+  user.username = req.body.username
+  user.password = req.body.password
+  user.save((err) => {
+    if (err) {
+      throw err
+    } else {
+      res.send('hello')
+    }
+  })
+}
+
 // Default route for non-API requests
 server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'))
 })
+
 module.exports = server
+
+// waiting for sodium
+
+server.post('/api/v1/jwt', (req, res) => {
+  Users.findbyId(req.body[0], (err, post) => {
+    if (err) {
+      return res.status(500).send('Like was not added')
+    } else {
+      post.votes += 1
+      post.save((err) => {
+        if (err) {
+          throw err
+        } else {
+          res.send({})
+        }
+      })
+    }
+  })
+})
