@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack && node server",
     "dev": "nodemon --watch server & webpack --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest test/client test/server"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,11 @@
       "react"
     ]
   },
+  "jest": {
+    "setupFiles": [
+      "./test/client-setup.js"
+    ]
+},
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
