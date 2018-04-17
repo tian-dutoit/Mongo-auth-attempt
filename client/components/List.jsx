@@ -30,12 +30,12 @@ export class List extends React.Component {
           <div className='post' key={post._id}>
             <div className='button'>
               <p id={`${post._id}-votes`}>Votes: {post.votes}</p>
-              <button name={post._id} onClick={this.handleClick}>Like</button>
+              <button name={post._id} onClick={this.handleClick}>Upvote</button>
             </div>
             <div className='content'>
-              <p>{post.title}</p>
-              <p>{post.description}</p>
-              <p>{post.username}</p>
+              <p className='title'>{post.title}</p>
+              <p className='description'>{post.description}</p>
+              <p className='userName'>{post.username}</p>
             </div>
           </div>
         ))}
