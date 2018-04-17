@@ -5,7 +5,6 @@ import {addVote} from '../actions/vote'
 
 import Placeholder from './Placeholder'
 
-
 export class List extends React.Component {
   constructor (props) {
     super(props)
@@ -24,6 +23,7 @@ export class List extends React.Component {
   }
 
   render () {
+
     return (
       <div className='listContainer'>
         <p> List is here </p>

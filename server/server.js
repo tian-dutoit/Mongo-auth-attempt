@@ -20,7 +20,7 @@ db.once('open', () => {
 })
 
 // Check for db errors
-db.on('error', () => {
+db.on('error', (err) => {
   console.log(err)
 })
 
@@ -30,7 +30,6 @@ server.get('/api/v1/posts', (req, res) => {
       throw err
     } else {
       let sorted = _.sortBy(posts, [function (o) { return o.votes }]).reverse()
-      console.log(sorted)
       res.send(sorted)
     }
   })
@@ -68,4 +67,8 @@ server.post('/api/v1/vote', (req, res) => {
   })
 })
 
+// Default route for non-API requests
+server.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'))
+})
 module.exports = server

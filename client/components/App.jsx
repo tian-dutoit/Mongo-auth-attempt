@@ -9,7 +9,6 @@ import Submit from './Submit'
 const App = () => (
   <div className='appContainer'>
     <Header />
-    <p>App is connected</p>
     <Route exact path = '/' component={List} />
     <Route exact path = '/submit' component={Submit} />
     <Footer />
