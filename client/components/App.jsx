@@ -7,7 +7,7 @@ import List from './List'
 import Submit from './Submit'
 
 const App = () => (
-  <div className='app-container'>
+  <div className='appContainer'>
     <Header />
     <p>App is connected</p>
     <Route exact path = '/' component={List} />

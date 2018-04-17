@@ -1,8 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
 import {getPosts} from '../actions/posts'
 import {addVote} from '../actions/vote'
+
+import Placeholder from './Placeholder'
+
 
 export class List extends React.Component {
   constructor (props) {
@@ -23,8 +25,9 @@ export class List extends React.Component {
 
   render () {
     return (
-      <div className='list-container'>
+      <div className='listContainer'>
         <p> List is here </p>
+        {this.props.posts.length < 1 && <Placeholder />}
         {this.props.posts.map(post => (
           <div key={post._id}>
             <p>{post.title}</p>
