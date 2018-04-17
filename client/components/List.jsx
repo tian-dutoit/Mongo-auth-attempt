@@ -23,18 +23,20 @@ export class List extends React.Component {
   }
 
   render () {
-
     return (
       <div className='listContainer'>
-        <p> List is here </p>
         {this.props.posts.length < 1 && <Placeholder />}
         {this.props.posts.map(post => (
-          <div key={post._id}>
-            <p>{post.title}</p>
-            <p>{post.description}</p>
-            <p>{post.username}</p>
-            <p id={`${post._id}-votes`}>Votes: {post.votes}</p>
-            <button name={post._id} onClick={this.handleClick}>Like</button>
+          <div className='post' key={post._id}>
+            <div className='button'>
+              <p id={`${post._id}-votes`}>Votes: {post.votes}</p>
+              <button name={post._id} onClick={this.handleClick}>Like</button>
+            </div>
+            <div className='content'>
+              <p>{post.title}</p>
+              <p>{post.description}</p>
+              <p>{post.username}</p>
+            </div>
           </div>
         ))}
       </div>

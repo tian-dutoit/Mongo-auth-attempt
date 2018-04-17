@@ -29,13 +29,14 @@ class Submit extends React.Component {
         <form>
           <input name='title' placeholder= 'title' onChange={this.handleChange} required/>
           <br />
-          <textarea name='description' placeholder= 'description' onChange={this.handleChange} required/>
-          <br />
           <input name='username' placeholder= 'username' onChange={this.handleChange} required/>
           <br />
           <input name='link' placeholder= 'link (optional)' onChange={this.handleChange} />
           <br />
+          <textarea name='description' placeholder= 'description' onChange={this.handleChange} required/>
+          <br />
           <button type='submit' onClick={this.handleClick}>Submit lightning talk</button>
+          <br />
         </form>
       </div>
     )
