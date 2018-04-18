@@ -8,7 +8,7 @@ let usersSchema = mongoose.Schema({
     required: true
   },
   password: {
-    type: String,
+    type: Buffer,
     required: true
   }
 })

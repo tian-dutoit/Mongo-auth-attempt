@@ -7,7 +7,6 @@ class Submit extends React.Component {
   constructor () {
     super()
     this.state = {
-      test: ''
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)

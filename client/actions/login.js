@@ -2,6 +2,15 @@ import request from 'superagent'
 
 import {showError} from './error'
 
+export const LOGIN = 'LOGIN'
+
+export const loggedIn = () => {
+  return {
+    type: LOGIN,
+    loggedIn: true
+  }
+}
+
 export function login (userDetails) {
   return (dispatch) => {
     request
@@ -9,6 +18,7 @@ export function login (userDetails) {
       .send(userDetails)
       .then(res => {
         localStorage.setItem('user', res.body.token)
+        dispatch(loggedIn(res.body))
       })
       .catch(() => {
         dispatch(showError('An unexpected error in getting information'))
