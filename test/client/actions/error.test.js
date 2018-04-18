@@ -1,5 +1,3 @@
-/* global test expect */
-
 import {showError, clearError} from '../../../client/actions/error'
 
 test('showError returns the correct action type', () => {
@@ -41,7 +39,7 @@ test('clearError returns the correct action', () => {
 test('showError returns the errorMessage', () => {
   const errorMessage = ['Error Message']
   const expected = {
-    type: 'RECEIVE_TYPE_DETAIL',
+    type: 'SHOW_ERROR',
     errorMessage: ['Error Message']
   }
 
