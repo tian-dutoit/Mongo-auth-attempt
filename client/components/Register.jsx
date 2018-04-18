@@ -9,10 +9,11 @@ class Register extends React.Component {
     this.state = {
     }
     this.handleChange = this.handleChange.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleClick () {
+  handleSubmit (e) {
+    e.preventDefault()
     this.props.dispatch(register(this.state))
   }
 
@@ -25,14 +26,14 @@ class Register extends React.Component {
   render () {
     return (
       <div className='registerContainer'>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <input name='username' placeholder= 'User name *' onChange={this.handleChange} required/>
           <br />
           <input name='password' placeholder= 'Password *' onChange={this.handleChange} />
           <br />
           <input name='confirmPassword' placeholder= 'Confirm Password *' onChange={this.handleChange} />
           <br />
-          <button type='button' className='loginButton' onClick={this.handleClick}>Register</button>
+          <button type='submit' className='loginButton'>Register</button>
           <br />
         </form>
       </div>

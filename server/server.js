@@ -74,18 +74,30 @@ let Users = require('../models/users')
 server.post('/api/v1/register', register)
 
 function register (req, res) {
-  const passwordHash = hash.generate(req.body.password)
-  let user = new Users()
-  user.username = req.body.username
-  user.password = passwordHash
-  user.save((err) => {
-    if (err) {
-      throw err
+  Users.find({username: req.body.username}, (err, oldUser) => {
+    if (oldUser.length > 0) {
+      return res.json({
+        message: 'That username is unavailable.'
+      })
+    } else if (err) {
+      return res.json({
+        message: 'An unexpected error has occured'
+      })
     } else {
-      const token = auth.createToken(user, process.env.JWT_SECRET)
-      res.json({
-        message: 'Authentication successful.',
-        token
+      const passwordHash = hash.generate(req.body.password)
+      let user = new Users()
+      user.username = req.body.username
+      user.password = passwordHash
+      user.save((err) => {
+        if (err) {
+          throw err
+        } else {
+          const token = auth.createToken(user, process.env.JWT_SECRET)
+          res.json({
+            message: 'Authentication successful.',
+            token
+          })
+        }
       })
     }
   })
@@ -93,8 +105,15 @@ function register (req, res) {
 
 server.post('/api/v1/login', (req, res) => {
   Users.find({username: req.body.username}, (err, user) => {
-    if (err) {
-      throw err
+    console.log('user', user[0].password, req.body.password)
+    if (hash.verifyUser(user.password, req.body.password)) {
+      res.json({
+        message: 'Incorrect user name or password.'
+      })
+    } else if (err) {
+      res.json({
+        message: 'An unexpected error has occured'
+      })
     } else {
       const token = auth.createToken(user[0], process.env.JWT_SECRET)
       res.json({

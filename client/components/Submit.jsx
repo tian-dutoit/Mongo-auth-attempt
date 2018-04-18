@@ -9,11 +9,12 @@ class Submit extends React.Component {
     this.state = {
       test: ''
     }
-    this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleClick () {
+  handleSubmit (e) {
+    e.preventDefault()
     this.props.dispatch(sendTalk(this.state))
   }
 
@@ -26,7 +27,7 @@ class Submit extends React.Component {
   render () {
     return (
       <div className='submitContainer'>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <input name='title' placeholder= 'Title *' onChange={this.handleChange} required/>
           <br />
           <input name='username' placeholder= 'User name *' onChange={this.handleChange} required/>
@@ -35,7 +36,7 @@ class Submit extends React.Component {
           <br />
           <textarea name='description' placeholder= 'Description *' onChange={this.handleChange} required/>
           <br />
-          <button type='submit' onClick={this.handleClick}>Submit lightning talk</button>
+          <button type='button'>Submit lightning talk</button>
           <br />
         </form>
       </div>
