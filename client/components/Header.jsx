@@ -18,7 +18,6 @@ class Header extends React.Component {
   }
 
   render () {
-    console.log(this.props.loggedIn)
     return (
       <div className='headerContainer'>
         <Link to='/' className='headerLink'> <span >Home</span> </Link>

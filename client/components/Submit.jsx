@@ -8,7 +8,7 @@ class Submit extends React.Component {
     super()
     this.state = {
     }
-    this.handleClick = this.handleClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -35,7 +35,7 @@ class Submit extends React.Component {
           <br />
           <textarea name='description' placeholder= 'Description *' onChange={this.handleChange} required/>
           <br />
-          <button type='button'>Submit lightning talk</button>
+          <button type='submit'>Submit lightning talk</button>
           <br />
         </form>
       </div>

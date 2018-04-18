@@ -37,7 +37,7 @@ server.get('/api/v1/posts', (req, res) => {
   })
 })
 
-server.post('/api/v1/posts', (req, res) => {
+server.post('/api/v1/posts', auth.decode, (req, res) => {
   let post = new Posts()
   post.title = req.body.title
   post.description = req.body.description
@@ -71,9 +71,7 @@ server.post('/api/v1/vote', auth.decode, (req, res) => {
 
 let Users = require('../models/users')
 
-server.post('/api/v1/register', register)
-
-function register (req, res) {
+server.post('/api/v1/register', (req, res) => {
   Users.find({username: req.body.username}, (err, oldUser) => {
     if (oldUser.length > 0) {
       return res.json({
@@ -101,7 +99,7 @@ function register (req, res) {
       })
     }
   })
-}
+})
 
 server.post('/api/v1/login', (req, res) => {
   Users.find({username: req.body.username}, (err, user) => {
