@@ -2,14 +2,13 @@ import request from 'superagent'
 
 import {showError} from './error'
 
-export function register (userDetails) {
+export function login (userDetails) {
   return (dispatch) => {
     request
-      .post(`http://localhost:3000/api/v1/register`)
+      .post(`http://localhost:3000/api/v1/login`)
       .send(userDetails)
       .then(res => {
         localStorage.setItem('user', res.body.token)
-        res.send(res)
       })
       .catch(() => {
         dispatch(showError('An unexpected error in getting information'))

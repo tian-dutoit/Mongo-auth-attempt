@@ -1,9 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import {register} from '../actions/register'
+import {login} from '../actions/login'
 
-class Register extends React.Component {
+class Login extends React.Component {
   constructor () {
     super()
     this.state = {
@@ -13,7 +13,7 @@ class Register extends React.Component {
   }
 
   handleClick () {
-    this.props.dispatch(register(this.state))
+    this.props.dispatch(login(this.state))
   }
 
   handleChange (e) {
@@ -24,15 +24,13 @@ class Register extends React.Component {
 
   render () {
     return (
-      <div className='registerContainer'>
+      <div className='loginContainer'>
         <form>
           <input name='username' placeholder= 'User name *' onChange={this.handleChange} required/>
           <br />
           <input name='password' placeholder= 'Password *' onChange={this.handleChange} />
           <br />
-          <input name='confirmPassword' placeholder= 'Confirm Password *' onChange={this.handleChange} />
-          <br />
-          <button type='button' className='loginButton' onClick={this.handleClick}>Register</button>
+          <button type='button' className='loginButton' onClick={this.handleClick}>Login</button>
           <br />
         </form>
       </div>
@@ -46,4 +44,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Register)
+export default connect(mapStateToProps)(Login)

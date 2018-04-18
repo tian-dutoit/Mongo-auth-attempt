@@ -88,9 +88,13 @@ textarea {
   margin: 1em;
 }
 
-.submitContainer {
+.loginContainer, .registerContainer, .submitContainer {
   margin-top: 10%;
   text-align: center;
+}
+
+.loginButton {
+  margin-top: 5%;
 }
 
 .title {

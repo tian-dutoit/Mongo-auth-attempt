@@ -52,7 +52,7 @@ server.post('/api/v1/posts', (req, res) => {
   })
 })
 
-server.post('/api/v1/vote', (req, res) => {
+server.post('/api/v1/vote', auth.decode, (req, res) => {
   Posts.findById(req.body[0], (err, post) => {
     if (err) {
       return res.status(500).send('Like was not added')
@@ -82,15 +82,17 @@ function register (req, res) {
     if (err) {
       throw err
     } else {
-      res.send(passwordHash)
+      const token = auth.createToken(user, process.env.JWT_SECRET)
+      res.json({
+        message: 'Authentication successful.',
+        token
+      })
     }
   })
 }
 
-// returns user by username
-
-server.post('/api/v1/jwt', (req, res) => {
-  Users.find(req.body, (err, user) => {
+server.post('/api/v1/login', (req, res) => {
+  Users.find({username: req.body.username}, (err, user) => {
     if (err) {
       throw err
     } else {
@@ -100,12 +102,6 @@ server.post('/api/v1/jwt', (req, res) => {
         token
       })
     }
-  })
-})
-
-server.get('/api/v1/username', auth.decode, (req, res) => {
-  res.json({
-    username: req.user.username
   })
 })
 
