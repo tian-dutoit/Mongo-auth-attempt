@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/share/yarn/bin/yarn.js add jwt-decode
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js test
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -67,6 +67,7 @@ npm manifest:
       "express": "^4.16.2",
       "express-jwt": "^5.3.1",
       "jsonwebtoken": "^8.2.1",
+      "jwt-decode": "^2.2.0",
       "mongoose": "^5.0.14",
       "sodium": "^2.0.3"
     }
@@ -3701,6 +3702,10 @@ Lockfile:
       jwa "^1.1.4"
       safe-buffer "^5.0.1"
   
+  jwt-decode@^2.2.0:
+    version "2.2.0"
+    resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
+  
   kareem@2.0.6:
     version "2.0.6"
     resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.0.6.tgz#011ed59fd718bb147c63141a799fc888cd5a211b"
@@ -6430,4 +6435,16 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/asus/Documents/Workspace/3dps-full-stack-test/node_modules/babel-loader/package.json'
+  Error: Command failed.
+  Exit code: 1
+  Command: sh
+  Arguments: -c echo "Error: no test specified" && exit 1
+  Directory: /home/asus/Documents/Workspace/3dps-full-stack-test
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/share/yarn/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/share/yarn/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/share/yarn/lib/cli.js:30281:17)
+      at ChildProcess.emit (events.js:180:13)
+      at maybeClose (internal/child_process.js:936:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)
