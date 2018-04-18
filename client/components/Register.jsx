@@ -7,6 +7,8 @@ class Register extends React.Component {
   constructor () {
     super()
     this.state = {
+      password: '',
+      confirmPassword: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -14,7 +16,9 @@ class Register extends React.Component {
 
   handleSubmit (e) {
     e.preventDefault()
-    this.props.dispatch(register(this.state))
+    if (this.state.password === this.state.confirmPassword) {
+      this.props.dispatch(register(this.state))
+    }
   }
 
   handleChange (e) {
@@ -29,13 +33,16 @@ class Register extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <input name='username' placeholder= 'User name *' onChange={this.handleChange} required/>
           <br />
-          <input name='password' placeholder= 'Password *' onChange={this.handleChange} />
+          <input type='password' name='password' placeholder= 'Password *' onChange={this.handleChange} />
           <br />
-          <input name='confirmPassword' placeholder= 'Confirm Password *' onChange={this.handleChange} />
+          <input type='password' name='confirmPassword' placeholder= 'Confirm Password *' onChange={this.handleChange} />
           <br />
           <button type='submit' className='loginButton'>Register</button>
           <br />
         </form>
+        <div className = 'message'>
+          <p>{this.state.message}</p>
+        </div>
       </div>
     )
   }

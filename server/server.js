@@ -105,8 +105,7 @@ function register (req, res) {
 
 server.post('/api/v1/login', (req, res) => {
   Users.find({username: req.body.username}, (err, user) => {
-    console.log('user', user[0].password, req.body.password)
-    if (hash.verifyUser(user.password, req.body.password)) {
+    if (!hash.verifyUser(user[0].password, req.body.password)) {
       res.json({
         message: 'Incorrect user name or password.'
       })
