@@ -104,6 +104,12 @@ server.post('/api/v1/jwt', (req, res) => {
   })
 })
 
+server.get('/username', auth.decode, (req, res) => {
+  res.json({
+    username: req.user.username
+  })
+})
+
 // Default route for non-API requests
 server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'))
