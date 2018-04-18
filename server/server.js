@@ -90,7 +90,6 @@ function register (req, res) {
 // returns user by username
 
 server.post('/api/v1/jwt', (req, res) => {
-  // token.issue(req.body)
   Users.find(req.body, (err, user) => {
     if (err) {
       throw err
@@ -104,7 +103,7 @@ server.post('/api/v1/jwt', (req, res) => {
   })
 })
 
-server.get('/username', auth.decode, (req, res) => {
+server.get('/api/v1/username', auth.decode, (req, res) => {
   res.json({
     username: req.user.username
   })
