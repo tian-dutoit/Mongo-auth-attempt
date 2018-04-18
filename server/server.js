@@ -5,7 +5,9 @@ const mongoose = require('mongoose')
 const _ = require('lodash')
 
 const server = express()
+
 const hash = require('./auth/hash')
+const auth = require('./auth/token')
 let Posts = require('../models/posts')
 
 server.use(bodyParser.json())
@@ -73,7 +75,6 @@ server.post('/api/v1/register', register)
 
 function register (req, res) {
   const passwordHash = hash.generate(req.body.password)
-  console.log(passwordHash)
   let user = new Users()
   user.username = req.body.username
   user.password = passwordHash
@@ -86,26 +87,22 @@ function register (req, res) {
   })
 }
 
-
-// temp
+// returns user by username
 
 server.post('/api/v1/jwt', (req, res) => {
-  Users.findbyId(req.body[0], (err, post) => {
+  // token.issue(req.body)
+  Users.find(req.body, (err, user) => {
     if (err) {
-      return res.status(500).send('Like was not added')
+      throw err
     } else {
-      post.votes += 1
-      post.save((err) => {
-        if (err) {
-          throw err
-        } else {
-          res.send({})
-        }
+      const token = auth.createToken(user[0], process.env.JWT_SECRET)
+      res.json({
+        message: 'Authentication successful.',
+        token
       })
     }
   })
 })
-
 
 // Default route for non-API requests
 server.get('*', (req, res) => {
@@ -113,4 +110,3 @@ server.get('*', (req, res) => {
 })
 
 module.exports = server
-
