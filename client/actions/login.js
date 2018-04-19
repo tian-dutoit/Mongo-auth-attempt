@@ -17,7 +17,7 @@ export function login (userDetails) {
       .post(`http://localhost:3000/api/v1/login`)
       .send(userDetails)
       .then(res => {
-        localStorage.setItem('user', res.body.token)
+        localStorage.setItem('token', res.body.token)
         dispatch(loggedIn(res.body))
       })
       .catch(() => {

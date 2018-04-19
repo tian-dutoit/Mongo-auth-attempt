@@ -37,7 +37,7 @@ server.get('/api/v1/posts', (req, res) => {
   })
 })
 
-server.post('/api/v1/posts', (req, res) => {
+server.post('/api/v1/posts', auth.decode, (req, res) => {
   let post = new Posts()
   post.title = req.body.title
   post.description = req.body.description
