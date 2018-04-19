@@ -20,7 +20,6 @@ export class List extends React.Component {
     if (active) {
       this.props.dispatch(loggedIn())
     }
-
     this.props.dispatch(getPosts())
   }
 

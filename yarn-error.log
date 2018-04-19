@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/share/yarn/bin/yarn.js de
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js test
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -6435,6 +6435,7 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
+<<<<<<< HEAD
   Error: Command "de" not found. Did you mean "dev"?
       at new MessageError (/usr/share/yarn/lib/cli.js:186:110)
       at /usr/share/yarn/lib/cli.js:87307:17
@@ -6446,3 +6447,18 @@ Trace:
       at /usr/share/yarn/lib/cli.js:95:12
       at runCommand (/usr/share/yarn/lib/cli.js:87312:22)
       at Object.<anonymous> (/usr/share/yarn/lib/cli.js:87412:14)
+=======
+  Error: Command failed.
+  Exit code: 1
+  Command: sh
+  Arguments: -c echo "Error: no test specified" && exit 1
+  Directory: /home/asus/Documents/Workspace/3dps-full-stack-test
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/share/yarn/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/share/yarn/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/share/yarn/lib/cli.js:30281:17)
+      at ChildProcess.emit (events.js:180:13)
+      at maybeClose (internal/child_process.js:936:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)
+>>>>>>> 8515e442d7b75f9039119689c627d194d5a01da7
