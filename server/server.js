@@ -6,10 +6,12 @@ const _ = require('lodash')
 
 const server = express()
 
+const hash = require('./auth/hash')
+const auth = require('./auth/token')
+let Posts = require('../models/posts')
+
 server.use(bodyParser.json())
 server.use(express.static(path.join(__dirname, '../public')))
-
-let Posts = require('../models/posts')
 
 mongoose.connect('mongodb://localhost/lightning')
 let db = mongoose.connection
@@ -35,7 +37,7 @@ server.get('/api/v1/posts', (req, res) => {
   })
 })
 
-server.post('/api/v1/posts', (req, res) => {
+server.post('/api/v1/posts', auth.decode, (req, res) => {
   let post = new Posts()
   post.title = req.body.title
   post.description = req.body.description
@@ -50,7 +52,7 @@ server.post('/api/v1/posts', (req, res) => {
   })
 })
 
-server.post('/api/v1/vote', (req, res) => {
+server.post('/api/v1/vote', auth.decode, (req, res) => {
   Posts.findById(req.body[0], (err, post) => {
     if (err) {
       return res.status(500).send('Like was not added')
@@ -67,8 +69,61 @@ server.post('/api/v1/vote', (req, res) => {
   })
 })
 
+let Users = require('../models/users')
+
+server.post('/api/v1/register', (req, res) => {
+  Users.find({username: req.body.username}, (err, oldUser) => {
+    if (oldUser.length > 0) {
+      return res.json({
+        message: 'That username is unavailable.'
+      })
+    } else if (err) {
+      return res.json({
+        message: 'An unexpected error has occured'
+      })
+    } else {
+      const passwordHash = hash.generate(req.body.password)
+      let user = new Users()
+      user.username = req.body.username
+      user.password = passwordHash
+      user.save((err) => {
+        if (err) {
+          throw err
+        } else {
+          const token = auth.createToken(user, process.env.JWT_SECRET)
+          res.json({
+            message: 'Authentication successful.',
+            token
+          })
+        }
+      })
+    }
+  })
+})
+
+server.post('/api/v1/login', (req, res) => {
+  Users.find({username: req.body.username}, (err, user) => {
+    if (!hash.verifyUser(user[0].password, req.body.password)) {
+      res.json({
+        message: 'Incorrect user name or password.'
+      })
+    } else if (err) {
+      res.json({
+        message: 'An unexpected error has occured'
+      })
+    } else {
+      const token = auth.createToken(user[0], process.env.JWT_SECRET)
+      res.json({
+        message: 'Authentication successful.',
+        token
+      })
+    }
+  })
+})
+
 // Default route for non-API requests
 server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'))
 })
+
 module.exports = server

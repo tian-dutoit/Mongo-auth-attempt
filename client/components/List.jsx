@@ -1,7 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
+
 import {getPosts} from '../actions/posts'
 import {addVote} from '../actions/vote'
+import {loggedIn} from '../actions/login'
 
 import Placeholder from './Placeholder'
 
@@ -14,6 +16,10 @@ export class List extends React.Component {
   }
 
   componentDidMount () {
+    const active = localStorage.getItem('token')
+    if (active) {
+      this.props.dispatch(loggedIn())
+    }
     this.props.dispatch(getPosts())
   }
 
@@ -26,7 +32,7 @@ export class List extends React.Component {
     return (
       <div className='listContainer'>
         {this.props.posts.length < 1 && <Placeholder />}
-        {this.props.posts.map(post => (
+        {this.props.posts.map((post, idx) => (
           <div className='post' key={post._id}>
             <div className='button'>
               <p id={`${post._id}-votes`}>Votes: {post.votes}</p>
