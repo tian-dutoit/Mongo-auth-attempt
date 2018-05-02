@@ -9,6 +9,7 @@ const server = express()
 const hash = require('./auth/hash')
 const auth = require('./auth/token')
 let Posts = require('../models/posts')
+let Users = require('../models/users')
 
 server.use(bodyParser.json())
 server.use(express.static(path.join(__dirname, '../public')))
@@ -69,8 +70,6 @@ server.post('/api/v1/vote', auth.decode, (req, res) => {
   })
 })
 
-let Users = require('../models/users')
-
 server.post('/api/v1/register', (req, res) => {
   Users.find({username: req.body.username}, (err, oldUser) => {
     if (oldUser.length > 0) {
@@ -103,9 +102,15 @@ server.post('/api/v1/register', (req, res) => {
 
 server.post('/api/v1/login', (req, res) => {
   Users.find({username: req.body.username}, (err, user) => {
-    if (!hash.verifyUser(user[0].password, req.body.password)) {
+    if (!user[0]) {
       res.json({
-        message: 'Incorrect user name or password.'
+        message: 'Incorrect user name'
+      })
+    } else if (!(hash.verifyUser(user[0].password, req.body.password))) {
+      console.log(hash.verifyUser(user[0].password, req.body.password))
+      // console.log(user[0].password, req.body.password)
+      res.json({
+        message: 'Incorrect user password.'
       })
     } else if (err) {
       res.json({
