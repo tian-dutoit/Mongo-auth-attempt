@@ -70,35 +70,34 @@ server.post('/api/v1/vote', auth.decode, (req, res) => {
   })
 })
 
-server.post('/api/v1/register', (req, res) => {
-  Users.find({username: req.body.username}, (err, oldUser) => {
-    if (oldUser.length > 0) {
-      return res.json({
-        message: 'That username is unavailable.'
-      })
-    } else if (err) {
-      return res.json({
-        message: 'An unexpected error has occured'
-      })
-    } else {
-      const passwordHash = hash.generate(req.body.password)
+server.post('/api/v1/register', register, auth.issue)
+
+function register (req, res, next) {
+  Users.find({username: req.body.username})
+    .then(oldUser => {
+      if (oldUser.length >= 1) {
+        return res.status(400).send({
+          errorType: 'USERNAME_UNAVAILABLE'
+        })
+      }
       let user = new Users()
       user.username = req.body.username
-      user.password = passwordHash
+      user.password = hash.generate(req.body.password)
       user.save((err) => {
         if (err) {
           throw err
         } else {
-          const token = auth.createToken(user, process.env.JWT_SECRET)
-          res.json({
-            message: 'Authentication successful.',
-            token
-          })
+          next()
         }
       })
-    }
-  })
-})
+    })
+
+    .catch(() => {
+      res.status(400).send({
+        errorType: 'DATABASE_ERROR'
+      })
+    })
+}
 
 server.post('/api/v1/login', login, auth.issue)
 
@@ -123,14 +122,6 @@ function login (req, res, next) {
 
 function invalidCredentials (res) {
   res.status(400).send({
-    // server.post('/api/v1/login', (req, res) => {
-    //   Users.find({username: req.body.username}, (err, user) => {
-    //     if (!user[0]) {
-    //       res.json({
-    //         message: 'Incorrect user name'
-    //       })
-    //     } else if (!(hash.verifyUser(user[0].password, req.body.password))) {
-    // 
     errorType: 'INVALID_CREDENTIALS'
   })
 }
