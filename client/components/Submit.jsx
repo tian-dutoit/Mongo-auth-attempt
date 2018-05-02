@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
-import {sendTalk} from '../actions/submit'
+import {clearSubmit, sendTalk} from '../actions/submit'
 
 class Submit extends React.Component {
   constructor () {
@@ -10,11 +11,11 @@ class Submit extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
-  handleSubmit (e) {
-    e.preventDefault()
-    this.props.dispatch(sendTalk(this.state))
+  componentDidMount () {
+    this.props.dispatch(clearSubmit())
   }
 
   handleChange (e) {
@@ -23,9 +24,23 @@ class Submit extends React.Component {
     })
   }
 
+  handleSubmit (e) {
+    e.preventDefault()
+    this.props.dispatch(sendTalk(this.state))
+  }
+
+  reset () {
+    this.props.dispatch(clearSubmit())
+  }
+
   render () {
     return (
       <div className='submitContainer'>
+        {this.props.submitted &&
+        <div>
+          <button onClick={this.reset}>Another Post</button>
+          <Link to='/' ><button>Return Home</button></Link></div>}
+        {!this.props.submitted &&
         <form onSubmit={this.handleSubmit}>
           <input name='title' placeholder= 'Title *' onChange={this.handleChange} required/>
           <br />
@@ -37,7 +52,7 @@ class Submit extends React.Component {
           <br />
           <button type='submit'>Submit lightning talk</button>
           <br />
-        </form>
+        </form>}
       </div>
     )
   }
@@ -45,7 +60,8 @@ class Submit extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts
+    posts: state.posts,
+    submitted: state.submitted.submitted
   }
 }
 

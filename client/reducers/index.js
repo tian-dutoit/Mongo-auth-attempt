@@ -1,9 +1,11 @@
 import {combineReducers} from 'redux'
 
-import posts from './posts'
 import login from './login'
+import posts from './posts'
+import submitted from './submitted'
 
 export default combineReducers({
+  login,
   posts,
-  login
+  submitted
 })
