@@ -100,31 +100,32 @@ server.post('/api/v1/register', (req, res) => {
   })
 })
 
-server.post('/api/v1/login', (req, res) => {
-  Users.find({username: req.body.username}, (err, user) => {
-    if (!user[0]) {
-      res.json({
-        message: 'Incorrect user name'
+server.post('/api/v1/login', login, auth.issue)
+
+function login (req, res, next) {
+  Users.find({username: req.body.username})
+    .then(user => {
+      return user[0] || invalidCredentials(res)
+    })
+    .then(user => {
+      return user && hash.verifyUser(user.password, req.body.password)
+    })
+    .then(isValid => {
+      return isValid ? next() : invalidCredentials(res)
+    })
+
+    .catch(() => {
+      res.status(400).send({
+        errorType: 'DATABASE_ERROR'
       })
-    } else if (!(hash.verifyUser(user[0].password, req.body.password))) {
-      console.log(hash.verifyUser(user[0].password, req.body.password))
-      // console.log(user[0].password, req.body.password)
-      res.json({
-        message: 'Incorrect user password.'
-      })
-    } else if (err) {
-      res.json({
-        message: 'An unexpected error has occured'
-      })
-    } else {
-      const token = auth.createToken(user[0], process.env.JWT_SECRET)
-      res.json({
-        message: 'Authentication successful.',
-        token
-      })
-    }
+    })
+}
+
+function invalidCredentials (res) {
+  res.status(400).send({
+    errorType: 'INVALID_CREDENTIALS'
   })
-})
+}
 
 // Default route for non-API requests
 server.get('*', (req, res) => {
