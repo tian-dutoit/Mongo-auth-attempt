@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 import {login} from '../actions/login'
 
@@ -26,14 +27,17 @@ class Login extends React.Component {
   render () {
     return (
       <div className='loginContainer'>
-        <form onSubmit={this.handleSubmit}>
-          <input name='username' placeholder= 'User name *' onChange={this.handleChange} required/>
-          <br />
-          <input type='password' name='password' placeholder= 'Password *' onChange={this.handleChange} />
-          <br />
-          <button type='submit' className='loginButton'>Login</button>
-          <br />
-        </form>
+        {this.props.loggedIn && <Link to='/' ><button>Login Successful</button></Link>}
+        {!this.props.loggedIn &&
+          <form onSubmit={this.handleSubmit}>
+            <input name='username' placeholder= 'User name *' onChange={this.handleChange} required/>
+            <br />
+            <input type='password' name='password' placeholder= 'Password *' onChange={this.handleChange} />
+            <br />
+            <button type='submit' className='loginButton'>Login</button>
+            <br />
+          </form>}
+
       </div>
     )
   }
@@ -41,7 +45,8 @@ class Login extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts
+    posts: state.posts,
+    loggedIn: state.login.loggedIn
   }
 }
 

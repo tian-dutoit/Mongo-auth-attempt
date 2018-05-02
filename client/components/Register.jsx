@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 import {register} from '../actions/register'
 
@@ -30,6 +31,8 @@ class Register extends React.Component {
   render () {
     return (
       <div className='registerContainer'>
+        {this.props.loggedIn && <Link to='/' ><button>Registration Successful</button></Link>}
+        {!this.props.loggedIn &&
         <form onSubmit={this.handleSubmit}>
           <input name='username' placeholder= 'User name *' onChange={this.handleChange} required/>
           <br />
@@ -39,7 +42,7 @@ class Register extends React.Component {
           <br />
           <button type='submit' className='loginButton'>Register</button>
           <br />
-        </form>
+        </form>}
         <div className = 'message'>
           <p>{this.state.message}</p>
         </div>
@@ -50,7 +53,8 @@ class Register extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts
+    posts: state.posts,
+    loggedIn: state.login.loggedIn
   }
 }
 

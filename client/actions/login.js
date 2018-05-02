@@ -4,7 +4,7 @@ import {showError} from './error'
 
 export const LOGIN = 'LOGIN'
 
-export const loggedIn = () => {
+export const loggedIn = (message) => {
   return {
     type: LOGIN,
     loggedIn: true
