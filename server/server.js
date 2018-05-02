@@ -123,6 +123,14 @@ function login (req, res, next) {
 
 function invalidCredentials (res) {
   res.status(400).send({
+    // server.post('/api/v1/login', (req, res) => {
+    //   Users.find({username: req.body.username}, (err, user) => {
+    //     if (!user[0]) {
+    //       res.json({
+    //         message: 'Incorrect user name'
+    //       })
+    //     } else if (!(hash.verifyUser(user[0].password, req.body.password))) {
+    // 
     errorType: 'INVALID_CREDENTIALS'
   })
 }

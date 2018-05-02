@@ -29,7 +29,6 @@ function issue (req, res) {
     })
 }
 
-
 function decode (req, res, next) {
   verifyJwt({
     secret: getSecret
