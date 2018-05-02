@@ -18,6 +18,6 @@ The project uses mongoDB and is connected in server/server.js to a database call
 
 There are models for two collections - 'users' and 'posts'.
 
-Users can regsiter and login and authentication is done with JWTs. Logging out should remove the JWT from local storage. A JWT token must be in local storage in order for a user to increase the like total or submit a talk. User passwords are hashed using sodium. 
+Users can regsiter and login and authentication is done with JWTs. Logging out should remove the JWT from local storage. A JWT token must be in local storage in order for a user to increase the like total. User passwords are hashed using sodium. 
 
 Testing is currently a work in progress. 
